@@ -2,18 +2,30 @@
 ATtiny85 pranayama blinker
  */
 
-int led = 1;
+#define right_led  0
+#define left_led  1
+#define left_thermistor 3
+#define right_thermistor 2 //pin mapping diagram?
 
-// the setup routine runs once when you press reset:
 void setup() {                
-  // initialize the digital pin as an output.
-  pinMode(led, OUTPUT);     
+  pinMode(left_led, OUTPUT);     
+  pinMode(right_led, OUTPUT); 
+  pinMode(left_thermistor, INPUT); 
+  pinMode(right_thermistor, INPUT); 
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);               // wait for a second
-  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);               // wait for a second
+
+  if(analogRead(right_thermistor) > analogRead(left_thermistor)){
+    digitalWrite(left_led, HIGH);   
+    delay(100);               
+    digitalWrite(left_led, LOW); 
+  }else{  
+    digitalWrite(right_led, HIGH); 
+    delay(100);               
+    digitalWrite(right_led, LOW);    
+  }
+  delay(100);
 }
+
